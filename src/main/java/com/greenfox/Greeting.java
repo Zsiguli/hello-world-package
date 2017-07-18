@@ -1,3 +1,5 @@
+package com.greenfox;
+
 public class Greeting {
 
   public void greetSomeone(String name) {

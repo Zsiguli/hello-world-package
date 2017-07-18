@@ -1,3 +1,5 @@
+package com.greenfox;
+
 public class HelloWorld {
 
   public static void helloWorld(){
