@@ -1,9 +1,35 @@
-group 'com.greenfox'
-version '1.0-SNAPSHOT'
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "http://dl.bintray.com/palantir/releases" }
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+        classpath 'com.palantir:gradle-gitsemver:0.7.0'
+    }
+}
 
 apply plugin: 'java'
+apply plugin: 'com.bmuschko.nexus'
+
+apply plugin: 'gitsemver'
+
+version semverVersion()
+group 'com.greenfox.zsiguli'
+
+def projectName = 'hello-world-package'
+def projectDescription = 'Hello World package to discover the workflow of deploing to Maven Central'
 
 sourceCompatibility = 1.8
+
+jar {
+    baseName = projectName
+    manifest {
+        attributes 'Implementation-Title': projectName,
+                'Implementation-Version': version
+    }
+}
 
 repositories {
     mavenCentral()
@@ -11,4 +37,34 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+modifyPom {
+    project {
+        name projectName
+        description projectDescription
+        url 'https://github.com/Zsiguli/hello-world-package'
+
+        scm {
+            url 'https://github.com/Zsiguli/hello-world-package'
+            connection 'scm:https://Zsiguli@github.com/Zsiguli/hello-world-package.git'
+            developerConnection 'scm:git://github.com/Zsiguli/hello-world-package.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'Zsiguli'
+                name 'Zsigmond Markovich'
+                email 'jade.sabers@gmail.com'
+            }
+        }
+    }
 }

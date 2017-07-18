@@ -1,4 +1,4 @@
-package com.greenfox;
+package com.greenfox.zsiguli;
 
 public class HelloWorld {
 
